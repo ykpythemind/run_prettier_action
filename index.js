@@ -16,6 +16,12 @@ const { execSync } = require('child_process');
     // }
 
     const pullRequestNumber = github.context.payload.issue.number;
+    const commentBody = github.context.payload.comment.body;
+
+    if (!commentBody || !commentBody.trim().startsWith('/prettier')) {
+      console.log('skip.')
+      return
+    }
 
     const octokit = new Octokit();
     const { data } = await octokit.pulls.get({
@@ -33,7 +39,6 @@ const { execSync } = require('child_process');
 
     console.log(`${prettierCommand}`)
     console.log(execSync(prettierCommand).toString())
-
   } catch (error) {
     core.setFailed(error.message);
   }

@@ -23,6 +23,12 @@ const { execSync } = __nccwpck_require__(129);
     // }
 
     const pullRequestNumber = github.context.payload.issue.number;
+    const commentBody = github.context.payload.comment.body;
+
+    if (!commentBody || !commentBody.trim().startsWith('/prettier')) {
+      console.log('skip.')
+      return
+    }
 
     const octokit = new Octokit();
     const { data } = await octokit.pulls.get({
@@ -40,7 +46,6 @@ const { execSync } = __nccwpck_require__(129);
 
     console.log(`${prettierCommand}`)
     console.log(execSync(prettierCommand).toString())
-
   } catch (error) {
     core.setFailed(error.message);
   }
