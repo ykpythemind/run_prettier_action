@@ -1,6 +1,6 @@
-on: 
+on:
   issue_comment:
-    types: [created, edited]
+    types: [created]
 
 jobs:
   hello_world_job:
@@ -20,4 +20,4 @@ jobs:
         id: hello
         with:
           prettier_command: git diff $BASE_BRANCH --name-only --diff-filter=ACMR "*.js" | sed 's| |\\ |g' | xargs ./node_modules/.bin/prettier --write
-
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
