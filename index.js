@@ -8,13 +8,6 @@ const { execSync } = require('child_process');
   try {
     const command = core.getInput('prettier_command');
 
-    // console.log('basebranch')
-    // console.log(baseBranch)
-    //
-    // if (baseBranch) {
-    //   console.log(execSync(`git fetch ${baseBranch} --depth 1`).toString())
-    // }
-
     const pullRequestNumber = github.context.payload.issue.number;
     const commentBody = github.context.payload.comment.body;
 
@@ -30,10 +23,22 @@ const { execSync } = require('child_process');
        pull_number: pullRequestNumber,
     });
 
-    console.log(data)
+    const baseBranch = data.base.ref
 
-    const payload = JSON.stringify(github.context.payload, undefined, 2)
-    console.log(`The event payload: ${payload}`);
+    // todo: paginate
+    const { data: fileList } = await octokit.pulls.listFiles({
+       owner: github.context.repo.owner,
+       repo: github.context.repo.repo,
+       pull_number: pullRequestNumber,
+    });
+
+    const files = fileList.map(s => s.filename)
+    console.log(files)
+
+    console.log(execSync(`git fetch ${baseBranch} --depth 1`).toString())
+
+    // const payload = JSON.stringify(github.context.payload, undefined, 2)
+    // console.log(`The event payload: ${payload}`);
 
     const prettierCommand = `${command}`
 
