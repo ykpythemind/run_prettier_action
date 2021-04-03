@@ -17,6 +17,9 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
-          prettier_command: './node_modules/.bin/prettier --write'
-          target_files: git diff main --name-only --diff-filter=ACMR "*.js" | sed 's| |\\ |g'
+          prettier_command: git diff $BASE_BRANCH --name-only --diff-filter=ACMR "*.js" | sed 's| |\\ |g' | xargs ./node_modules/.bin/prettier --write
+          base_branch: $BASE_BRANCH
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          BASE_BRANCH: ${{ github.base_ref }}
 
