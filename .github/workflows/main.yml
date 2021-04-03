@@ -17,5 +17,6 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
-          prettier_command: 'git diff'
+          prettier_command: './node_modules/.bin/prettier --write'
+          target_files: git diff master --name-only --diff-filter=ACMR "*.js" | sed 's| |\\ |g'
 
