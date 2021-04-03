@@ -17,7 +17,8 @@ const { execSync } = require('child_process');
 
     const pullRequestNumber = github.context.payload.issue.number;
 
-    const { data } = await Octokit.pulls.get({
+    const octokit = new Octokit();
+    const { data } = await octokit.pulls.get({
        owner: github.context.repo.owner,
        repo: github.context.repo.repo,
        pull_number: pullRequestNumber,
