@@ -47,10 +47,12 @@ const { execSync, spawnSync } = __nccwpck_require__(129);
     // const payload = JSON.stringify(github.context.payload, undefined, 2)
     // console.log(`The event payload: ${payload}`);
 
+    // todo: inputs.glob
+
     const command = `${prettierCommand} ${files.join(' ')}`
     console.log(command)
 
-    const { status, error, stdout } = spawnSync(command)
+    const { status, error, stdout } = spawnSync(command, {shell: true})
 
     if (status !== 0 || status !== 1) {
       if (error) {

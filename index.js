@@ -45,7 +45,7 @@ const { execSync, spawnSync } = require('child_process');
     const command = `${prettierCommand} ${files.join(' ')}`
     console.log(command)
 
-    const { status, error, stdout } = spawnSync(command)
+    const { status, error, stdout } = spawnSync(command, {shell: true})
 
     if (status !== 0 || status !== 1) {
       if (error) {
