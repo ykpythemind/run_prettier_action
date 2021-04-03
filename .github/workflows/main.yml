@@ -19,5 +19,5 @@ jobs:
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
-          prettier_command: git diff $BASE_BRANCH --name-only --diff-filter=ACMR "*.js" | sed 's| |\\ |g' | xargs ./node_modules/.bin/prettier --write
+          prettier_command: ./node_modules/.bin/prettier --write
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
