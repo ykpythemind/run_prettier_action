@@ -8,12 +8,14 @@ module.exports =
 const core = __nccwpck_require__(186);
 const github = __nccwpck_require__(438);
 
+const { exec } = __nccwpck_require__(129);
+
 try {
   const command = core.getInput('prettier_command');
   console.log(`Hello ${command}!`);
-  // const time = (new Date()).toTimeString();
-  // core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
+
+  exec('ls -la');
+
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   console.log(`The event payload: ${payload}`);
 } catch (error) {
@@ -5923,6 +5925,14 @@ module.exports = eval("require")("encoding");
 
 "use strict";
 module.exports = require("assert");;
+
+/***/ }),
+
+/***/ 129:
+/***/ ((module) => {
+
+"use strict";
+module.exports = require("child_process");;
 
 /***/ }),
 
