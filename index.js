@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const { Octokit } = require("@octokit/action");
+const exec = require('@actions/exec');
 
 const { execSync, spawnSync } = require('child_process');
 
@@ -17,13 +18,17 @@ const { execSync, spawnSync } = require('child_process');
     }
 
     const octokit = new Octokit();
-    // const { data } = await octokit.pulls.get({
-    //    owner: github.context.repo.owner,
-    //    repo: github.context.repo.repo,
-    //    pull_number: pullRequestNumber,
-    // });
+    const { data } = await octokit.pulls.get({
+       owner: github.context.repo.owner,
+       repo: github.context.repo.repo,
+       pull_number: pullRequestNumber,
+    });
 
     // const baseBranch = data.base.ref
+    const branch = data.head.ref
+
+    await exec.exec(`git fetch origin ${branch}`)
+    await exec.exec(`git switch ${branch}`)
 
     // todo: paginate
     const { data: fileList } = await octokit.pulls.listFiles({
@@ -33,19 +38,15 @@ const { execSync, spawnSync } = require('child_process');
     });
 
     const files = fileList.map(s => s.filename)
-    console.log(files)
-
-    // console.log(execSync(`git fetch ${baseBranch} --depth 1`).toString())
-
-    // const payload = JSON.stringify(github.context.payload, undefined, 2)
-    // console.log(`The event payload: ${payload}`);
+    console.log('target files:', files)
 
     // todo: inputs.glob
 
     const command = `${prettierCommand} ${files.join(' ')}`
-    console.log(command)
+    console.log('run command:', command)
 
-    const { status, error, stdout } = spawnSync(command, {shell: true})
+    // actions/exec のほうが良いかも
+    const { status, error, stdout } = spawnSync(command, { shell: true })
 
     if (status !== 0 || status !== 1) {
       if (error) {
@@ -56,6 +57,18 @@ const { execSync, spawnSync } = require('child_process');
     const cmdOutput = stdout.toString()
     console.log(cmdOutput)
 
+    // commit
+    // await exec.exec(`gi`)
+
+    // create PR comment
+    const body = `prettier\n\n${cmdOutput}`
+
+    await octokit.issues.createComment({
+       owner: github.context.repo.owner,
+       repo: github.context.repo.repo,
+       pull_number: pullRequestNumber,
+      body: body
+    })
   } catch (error) {
     core.setFailed(error.message);
   }
