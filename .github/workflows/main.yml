@@ -1,4 +1,6 @@
-on: [push]
+on: 
+  issue_comment:
+    types: [created]
 
 jobs:
   hello_world_job:
@@ -18,8 +20,4 @@ jobs:
         id: hello
         with:
           prettier_command: git diff $BASE_BRANCH --name-only --diff-filter=ACMR "*.js" | sed 's| |\\ |g' | xargs ./node_modules/.bin/prettier --write
-          base_branch: $BASE_BRANCH
-        if: ${{ github.event_name == 'pull_request' }}
-        env:
-          BASE_BRANCH: ${{ github.base_ref }}
 

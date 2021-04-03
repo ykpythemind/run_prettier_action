@@ -4,8 +4,6 @@ inputs:
   prettier_command:
     description: 'command'
     required: true
-  base_branch:
-    description: 'base branch'
 runs:
   using: 'node12'
   main: 'dist/index.js'
