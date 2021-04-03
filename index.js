@@ -38,7 +38,7 @@ const { execSync, spawnSync } = require('child_process');
     });
 
     const files = fileList.map(s => s.filename)
-    console.log('target files:', files)
+         console.log('target files:', files)
 
     // todo: inputs.glob
 
@@ -46,7 +46,7 @@ const { execSync, spawnSync } = require('child_process');
     console.log('run command:', command)
 
     // actions/exec のほうが良いかも
-    const { status, error, stdout } = spawnSync(command, { shell: true })
+      const { status, error, stdout } = spawnSync(command, { shell: true })
 
     if (status !== 0 || status !== 1) {
       if (error) {
