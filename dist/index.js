@@ -12,9 +12,9 @@ const { execSync } = __nccwpck_require__(129);
 
 try {
   const command = core.getInput('prettier_command');
-  console.log(`Hello ${command}!`);
+  const targetFiles = core.getInput('target_files')
 
-  const prettierCommand = `${target_files} | xargs ${command}`
+  const prettierCommand = `${targetFiles} | xargs ${command}`
 
   console.log(`${prettierCommand}`)
   console.log(execSync(prettierCommand).toString())

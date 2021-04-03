@@ -5,9 +5,9 @@ const { execSync } = require('child_process');
 
 try {
   const command = core.getInput('prettier_command');
-  console.log(`Hello ${command}!`);
+  const targetFiles = core.getInput('target_files')
 
-  const prettierCommand = `${target_files} | xargs ${command}`
+  const prettierCommand = `${targetFiles} | xargs ${command}`
 
   console.log(`${prettierCommand}`)
   console.log(execSync(prettierCommand).toString())
