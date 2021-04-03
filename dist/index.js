@@ -70,11 +70,12 @@ const { execSync, spawnSync } = __nccwpck_require__(3129);
     // create PR comment
     const body = `prettier\n\n${cmdOutput}`
 
-    await octokit.issues.createComment({
+    await octokit.pulls.createReview({
        owner: github.context.repo.owner,
        repo: github.context.repo.repo,
        pull_number: pullRequestNumber,
-      body: body
+       body: body,
+       event: 'COMMENT'
     })
   } catch (error) {
     core.setFailed(error.message);
