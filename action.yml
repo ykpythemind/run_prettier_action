@@ -4,6 +4,9 @@ inputs:
   prettier_command:
     description: 'command'
     required: true
+  target_files:
+    description: 'target files. pass prettier command via xargs'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
