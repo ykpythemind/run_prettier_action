@@ -1,0 +1,9 @@
+name: 'Run Prettier action'
+description: 'run prettier'
+inputs:
+  prettier_command:
+    description: 'command'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

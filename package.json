@@ -1,0 +1,26 @@
+{
+  "name": "run_prettier_action",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ncc": "ncc build index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ykpythemind/run_prettier_action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ykpythemind/run_prettier_action/issues"
+  },
+  "homepage": "https://github.com/ykpythemind/run_prettier_action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "@vercel/ncc": "^0.27.0"
+  }
+}
