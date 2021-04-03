@@ -8,13 +8,13 @@ module.exports =
 const core = __nccwpck_require__(186);
 const github = __nccwpck_require__(438);
 
-const { exec } = __nccwpck_require__(129);
+const { execSync } = __nccwpck_require__(129);
 
 try {
   const command = core.getInput('prettier_command');
   console.log(`Hello ${command}!`);
 
-  exec('ls -la');
+  console.log(execSync('ls -la'))
 
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   console.log(`The event payload: ${payload}`);
