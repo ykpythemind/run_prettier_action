@@ -14,7 +14,7 @@ try {
   const command = core.getInput('prettier_command');
   console.log(`Hello ${command}!`);
 
-  console.log(execSync('ls -la'))
+  console.log(execSync('ls -la').toString())
 
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   console.log(`The event payload: ${payload}`);
