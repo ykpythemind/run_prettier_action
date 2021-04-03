@@ -40,6 +40,8 @@ const { execSync, spawnSync } = require('child_process');
     // const payload = JSON.stringify(github.context.payload, undefined, 2)
     // console.log(`The event payload: ${payload}`);
 
+    // todo: inputs.glob
+
     const command = `${prettierCommand} ${files.join(' ')}`
     console.log(command)
 
