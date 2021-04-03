@@ -15,7 +15,7 @@ const { execSync } = require('child_process');
     //   console.log(execSync(`git fetch ${baseBranch} --depth 1`).toString())
     // }
 
-    const pullRequestNumber = github.context.payload.pull_request.number;
+    const pullRequestNumber = github.context.payload.issue.number;
 
     const { data } = await Octokit.pulls.get({
        owner: github.context.repo.owner,
