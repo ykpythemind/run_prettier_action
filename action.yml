@@ -1,0 +1,12 @@
+name: "Run Prettier action by PR comment command"
+description: "run prettier"
+inputs:
+  prettier_command:
+    description: "command"
+    required: true
+  github_token:
+    description: "token"
+    required: true
+runs:
+  using: "node12"
+  main: "dist/index.js"
