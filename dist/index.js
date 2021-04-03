@@ -9,18 +9,11 @@ const core = __nccwpck_require__(186);
 const github = __nccwpck_require__(438);
 const { Octokit } = __nccwpck_require__(231);
 
-const { execSync } = __nccwpck_require__(129);
+const { execSync, spawnSync } = __nccwpck_require__(129);
 
 (async () => {
   try {
-    const command = core.getInput('prettier_command');
-
-    // console.log('basebranch')
-    // console.log(baseBranch)
-    //
-    // if (baseBranch) {
-    //   console.log(execSync(`git fetch ${baseBranch} --depth 1`).toString())
-    // }
+    const prettierCommand = core.getInput('prettier_command');
 
     const pullRequestNumber = github.context.payload.issue.number;
     const commentBody = github.context.payload.comment.body;
@@ -31,21 +24,43 @@ const { execSync } = __nccwpck_require__(129);
     }
 
     const octokit = new Octokit();
-    const { data } = await octokit.pulls.get({
+    // const { data } = await octokit.pulls.get({
+    //    owner: github.context.repo.owner,
+    //    repo: github.context.repo.repo,
+    //    pull_number: pullRequestNumber,
+    // });
+
+    // const baseBranch = data.base.ref
+
+    // todo: paginate
+    const { data: fileList } = await octokit.pulls.listFiles({
        owner: github.context.repo.owner,
        repo: github.context.repo.repo,
        pull_number: pullRequestNumber,
     });
 
-    console.log(data)
+    const files = fileList.map(s => s.filename)
+    console.log(files)
 
-    const payload = JSON.stringify(github.context.payload, undefined, 2)
-    console.log(`The event payload: ${payload}`);
+    // console.log(execSync(`git fetch ${baseBranch} --depth 1`).toString())
 
-    const prettierCommand = `${command}`
+    // const payload = JSON.stringify(github.context.payload, undefined, 2)
+    // console.log(`The event payload: ${payload}`);
 
-    console.log(`${prettierCommand}`)
-    console.log(execSync(prettierCommand).toString())
+    const command = `${prettierCommand} ${files.join(' ')}`
+    console.log(command)
+
+    const { status, error, stdout } = spawnSync(command)
+
+    if (status !== 0 || status !== 1) {
+      if (error) {
+        throw error
+      }
+    }
+
+    const cmdOutput = stdout.toString()
+    console.log(cmdOutput)
+
   } catch (error) {
     core.setFailed(error.message);
   }
