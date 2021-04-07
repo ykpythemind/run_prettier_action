@@ -13,7 +13,7 @@ const { spawnSync } = require("child_process");
     const commentBody = github.context.payload.comment.body;
 
     // /p とか /pre とか /prettier とか /pretier (つづりミス) などにマッチ
-    const commandRegexp = new RegExp("^/p(ret?t?i?e?r?)?$");
+    const commandRegexp =     new RegExp("^/p(ret?t?i?e?r?)?$");
 
     if (!commentBody || !commandRegexp.test(commentBody.trim())) {
       console.log("skip.");
