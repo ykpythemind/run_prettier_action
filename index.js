@@ -49,9 +49,11 @@ const { spawnSync } = require("child_process");
     console.log("run command:", command);
 
     // actions/exec のほうが良いかも
-    const { status, error, stdout } = spawnSync(command, { shell: true });
+    const { status, error, stdout, stderr } = spawnSync(command, {
+      shell: true,
+    });
 
-    // 処理できなかったファイルとかあると止まるという
+    // 処理できなかったファイルとかあると止まる
     // if (status !== 0 || status !== 1) {
     //   if (error) {
     //     throw error
@@ -75,6 +77,17 @@ const { spawnSync } = require("child_process");
       body: body,
       event: "COMMENT",
     });
+
+    if (error) {
+      const body = `error: ${error}\n\n${stderr}`;
+      await octokit.pulls.createReview({
+        owner: github.context.repo.owner,
+        repo: github.context.repo.repo,
+        pull_number: pullRequestNumber,
+        body: body,
+        event: "COMMENT",
+      });
+    }
   } catch (error) {
     core.setFailed(error.message);
   }
