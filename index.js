@@ -3,7 +3,7 @@ const github = require("@actions/github");
 const { Octokit } = require("@octokit/action");
 const exec = require("@actions/exec");
 
-const { spawnSync } = require("child_process");
+const { spawnSync } =      require("child_process");
 
 (async () => {
   try {
