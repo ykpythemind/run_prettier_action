@@ -78,8 +78,12 @@ const { spawnSync } = require("child_process");
       event: "COMMENT",
     });
 
-    if (error || stderr) {
-      const body = `error: ${error}\nstderr: ${stderr}`;
+    if (stderr) {
+      console.log('stderr', stderr)
+    }
+
+    if (error) {
+      const body = `error: ${error}`;
       await octokit.pulls.createReview({
         owner: github.context.repo.owner,
         repo: github.context.repo.repo,
