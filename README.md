@@ -20,7 +20,7 @@ jobs:
       - run: npm install
 
       - name: run prettier command
-        uses: ykpythemind/run_prettier_action
+        uses: ykpythemind/run_prettier_action@main
         with:
           prettier_command: ./node_modules/.bin/prettier --write
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
