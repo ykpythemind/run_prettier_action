@@ -1,5 +1,7 @@
 # run_prettier_action
 
+## Usage
+
 ```yaml
 on:
   issue_comment:
@@ -34,9 +36,13 @@ jobs:
           skip_fetch: true
 ```
 
-## use
+<img width="1061" alt="image" src="https://user-images.githubusercontent.com/22209702/115342382-25e0bc00-a1e5-11eb-8683-e8b5662a8c41.png">
 
-xxx
+
+### About (Japanese)
+
+インストールすると、PRコメントで `/prettier` を入力することで自動でprettierをかけ、commitを積んでくれるactionが起動します。  
+pre commit hookが苦手な方、任意のタイミングでprettierかけたい方にオススメです
 
 ## option
 
