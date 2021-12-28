@@ -87,9 +87,9 @@ const branchName = generateRandomString(32);
       });
 
       console.log("sleep...");
-      await sleep(20);
+      await sleep(30);
 
-      for (let item of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
+      for (let item of Array(40)) {
         const commits = await octokit.pulls.listCommits({
           owner,
           repo,
@@ -99,6 +99,10 @@ const branchName = generateRandomString(32);
         const newCommitNum = commits.data.length;
 
         console.log(`c ${commitsnum}: c2: ${newCommitNum}`);
+        if (commitsnum < newCommitNum) {
+          console.log(commits);
+          console.log("found!!!!!!!");
+        }
         await sleep(1);
       }
     } catch (e) {
