@@ -89,21 +89,28 @@ const branchName = generateRandomString(32);
       console.log("sleep...");
       await sleep(30);
 
-      for (let item of Array(40)) {
+      for (let item of Array(30)) {
         const commits = await octokit.pulls.listCommits({
           owner,
           repo,
           pull_number: pr,
         });
-        console.log(commits);
         const newCommitNum = commits.data.length;
 
         console.log(`c ${commitsnum}: c2: ${newCommitNum}`);
         if (commitsnum < newCommitNum) {
-          console.log(commits);
+          console.log(commits.data);
           console.log("found!!!!!!!");
+
+          const lastCommit = commits.data.at(-1);
+          if (lastCommit.commit.message === "Apply prettier changes") {
+            console.log("found the commit!", lastCommit.commit);
+          } else {
+            throw Error("commit is not expected", lastCommit);
+          }
+          break;
         }
-        await sleep(1);
+        await sleep(2);
       }
     } catch (e) {
       console.error(e);
