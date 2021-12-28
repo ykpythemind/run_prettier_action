@@ -22,13 +22,13 @@ jobs:
         with:
           node-version: "14"
 
-      - run: npm install
+      - run: npm ci
 
       - name: run prettier command
         uses: ykpythemind/run_prettier_action@main
         with:
           prettier_command: ./node_modules/.bin/prettier --write
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
