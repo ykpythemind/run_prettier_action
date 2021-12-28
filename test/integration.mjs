@@ -43,8 +43,8 @@ const branchName = generateRandomString(32);
 (async () => {
   process.chdir(dir);
 
-  // execSync(`git config --global user.email "test@example.com"`);
-  // execSync(`git config --global user.name "ykpythemind"`);
+  execSync(`git config --global user.email "test@example.com"`);
+  execSync(`git config --global user.name "ykpythemind"`);
 
   // const stdout = execSync(
   //   "git clone https://github.com/ykpythemind/run_prettier_action ."
