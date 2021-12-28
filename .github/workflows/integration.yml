@@ -31,4 +31,5 @@ jobs:
         env:
           REMOTE_BRANCH: ${{ github.event.inputs.branch }}
           GITHUB_TOKEN: ${{ secrets.PAT }}
+          DIR: .
         run: node test/integration.mjs
