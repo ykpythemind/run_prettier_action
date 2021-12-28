@@ -12,6 +12,8 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
+      - run: echo 'insight payload: ${{ toJson(github.event) }}'
+
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
