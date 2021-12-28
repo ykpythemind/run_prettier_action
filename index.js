@@ -7,6 +7,7 @@ const { spawnSync } = require("child_process");
 
 (async () => {
   try {
+    console.log("hey!");
     const prettierCommand = core.getInput("prettier_command");
 
     const pullRequestNumber = github.context.payload.issue.number;
@@ -81,7 +82,7 @@ const { spawnSync } = require("child_process");
     });
 
     if (stderr) {
-      console.log('stderr', stderr)
+      console.log("stderr", stderr);
     }
 
     if (error) {

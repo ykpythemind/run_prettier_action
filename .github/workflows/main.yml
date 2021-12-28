@@ -7,15 +7,23 @@ jobs:
     runs-on: ubuntu-latest
     name: try job
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PAT }}
-
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
+
+      - name: get branch
+        id: pullRequestBranch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "::set-output name=branch::$(curl -H "Authorization: token ${GITHUB_TOKEN}" ${{ github.event.issue.pull_request.url }} | jq '.head.ref' | sed 's/\"//g')"
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
+          ref: ${{ steps.pullRequestBranch.outputs.branch }}
 
       - uses: actions/setup-node@v2
         with:
