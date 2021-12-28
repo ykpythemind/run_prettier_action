@@ -7,7 +7,7 @@ const { spawnSync } = require("child_process");
 
 (async () => {
   try {
-    console.log('hey! from branch aaaa');
+    console.log("hey! from branch aaaa");
     const prettierCommand = core.getInput("prettier_command");
 
     const pullRequestNumber = github.context.payload.issue.number;
