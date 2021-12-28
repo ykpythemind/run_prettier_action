@@ -51930,7 +51930,7 @@ const { spawnSync } = __nccwpck_require__(2081);
 
 (async () => {
   try {
-    console.log("hey! from branch");
+    console.log('hey! from branch aaaa');
     const prettierCommand = core.getInput("prettier_command");
 
     const pullRequestNumber = github.context.payload.issue.number;
