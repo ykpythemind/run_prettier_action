@@ -120,6 +120,7 @@ const branchName = generateRandomString(32);
     }
   } catch (e) {
     console.error(e);
+    throw e;
   } finally {
     if (pr) {
       withErrorHandling(async () => {
