@@ -55,3 +55,10 @@ Your repository must contain `prettier` package on package.json
 ```
 npm run ncc
 ```
+
+
+## test
+
+### Integration
+
+Go to https://github.com/ykpythemind/run_prettier_action/actions/workflows/integration.yml and dispatch workflow.
