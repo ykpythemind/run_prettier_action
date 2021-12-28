@@ -41,6 +41,9 @@ const branchName = generateRandomString(32);
 
     process.chdir(directory);
 
+    execSync(`git config --local user.email "test@example.com"`);
+    execSync(`git config --local user.name "ykpythemind"`);
+
     const stdout = execSync(
       "git clone https://github.com/ykpythemind/run_prettier_action ."
     );
