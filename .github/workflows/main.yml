@@ -37,7 +37,7 @@ jobs:
         id: hello
         with:
           prettier_command: ./node_modules/.bin/prettier --write
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
