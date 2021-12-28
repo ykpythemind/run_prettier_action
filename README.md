@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           # see https://github.com/stefanzweifel/git-auto-commit-action#commits-of-this-action-do-not-trigger-new-workflow-runs
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
 
       - uses: actions/setup-node@v2
         with:
