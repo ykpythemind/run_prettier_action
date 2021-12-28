@@ -12,7 +12,10 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
 
-      - run: echo 'insight payload: ${{ toJson(github.event) }}'
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
       - uses: actions/setup-node@v2
         with:
