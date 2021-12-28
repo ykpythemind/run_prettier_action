@@ -33,7 +33,7 @@ if (!remoteBranchName) {
   throw Error("specify REMOTE_BRANCH");
 }
 
-const dir = process.env.DIR;
+const dir = process.env.DIR; // ローカルで実行するときは DIR=/tmp などを指定する
 if (!dir) {
   throw Error("specify DIR");
 }
@@ -46,6 +46,7 @@ const branchName = generateRandomString(32);
   execSync(`git config --global user.email "test@example.com"`);
   execSync(`git config --global user.name "ykpythemind"`);
 
+  // localでデバッグするとき...
   // const stdout = execSync(
   //   "git clone https://github.com/ykpythemind/run_prettier_action ."
   // );
