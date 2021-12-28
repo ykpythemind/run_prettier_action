@@ -41,7 +41,7 @@ jobs:
 
 ### About (Japanese)
 
-インストールすると、PRコメントで `/prettier` を入力することで自動でprettierをかけ、commitを積んでくれるactionが起動します。  
+インストールすると、PRコメントで `/prettier` を入力することで自動でprettierをかけ、commitを積んでくれるactionが起動します。
 pre commit hookが苦手な方、任意のタイミングでprettierかけたい方にオススメです
 
 ## option
@@ -50,3 +50,8 @@ pre commit hookが苦手な方、任意のタイミングでprettierかけたい
 
 Your repository must contain `prettier` package on package.json
 
+## build actions
+
+```
+npm run ncc
+```
