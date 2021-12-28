@@ -51930,6 +51930,7 @@ const { spawnSync } = __nccwpck_require__(2081);
 
 (async () => {
   try {
+    console.log("hey! from branch");
     const prettierCommand = core.getInput("prettier_command");
 
     const pullRequestNumber = github.context.payload.issue.number;
@@ -51942,6 +51943,8 @@ const { spawnSync } = __nccwpck_require__(2081);
       console.log("skip.");
       return;
     }
+
+    // TODO: reaction here
 
     const octokit = new Octokit();
     const { data } = await octokit.pulls.get({
@@ -52002,7 +52005,7 @@ const { spawnSync } = __nccwpck_require__(2081);
     });
 
     if (stderr) {
-      console.log('stderr', stderr)
+      console.log("stderr", stderr);
     }
 
     if (error) {
