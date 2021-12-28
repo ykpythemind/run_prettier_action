@@ -7,7 +7,7 @@ const { spawnSync } = require("child_process");
 
 (async () => {
   try {
-    console.log("hey!");
+    console.log("hey! from branch");
     const prettierCommand = core.getInput("prettier_command");
 
     const pullRequestNumber = github.context.payload.issue.number;
@@ -20,6 +20,8 @@ const { spawnSync } = require("child_process");
       console.log("skip.");
       return;
     }
+
+    // TODO: reaction here
 
     const octokit = new Octokit();
     const { data } = await octokit.pulls.get({

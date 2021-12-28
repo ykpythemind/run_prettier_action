@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           # see https://github.com/stefanzweifel/git-auto-commit-action#commits-of-this-action-do-not-trigger-new-workflow-runs
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
 
       - uses: actions/setup-node@v2
         with:
@@ -41,7 +41,7 @@ jobs:
 
 ### About (Japanese)
 
-インストールすると、PRコメントで `/prettier` を入力することで自動でprettierをかけ、commitを積んでくれるactionが起動します。  
+インストールすると、PRコメントで `/prettier` を入力することで自動でprettierをかけ、commitを積んでくれるactionが起動します。
 pre commit hookが苦手な方、任意のタイミングでprettierかけたい方にオススメです
 
 ## option
@@ -50,3 +50,8 @@ pre commit hookが苦手な方、任意のタイミングでprettierかけたい
 
 Your repository must contain `prettier` package on package.json
 
+## build actions
+
+```
+npm run ncc
+```

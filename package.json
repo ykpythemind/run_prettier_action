@@ -13,19 +13,19 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ykpythemind/run_prettier_action/issues"
   },
   "homepage": "https://github.com/ykpythemind/run_prettier_action#readme",
   "dependencies": {
-    "@actions/core": "^1.2.6",
-    "@actions/exec": "^1.0.4",
-    "@actions/github": "^4.0.0",
-    "@octokit/action": "^3.7.1",
-    "@vercel/ncc": "^0.27.0"
+    "@actions/core": "^1.6.0",
+    "@actions/exec": "^1.1.0",
+    "@actions/github": "^5.0.0",
+    "@octokit/action": "^3.18.0",
+    "@vercel/ncc": "^0.33.1"
   },
   "devDependencies": {
-    "prettier": "2.2.1"
+    "prettier": "2.5.1"
   }
 }
