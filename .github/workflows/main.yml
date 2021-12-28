@@ -19,7 +19,7 @@ jobs:
 
       - run: npm install
 
-      - name: Run prettier command
+      - name: Run prettier command (for test)
         uses: ./ # Uses an action in the root directory
         id: hello
         with:
