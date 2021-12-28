@@ -20,6 +20,8 @@ const { spawnSync } = require("child_process");
       return;
     }
 
+    // TODO: reaction here
+
     const octokit = new Octokit();
     const { data } = await octokit.pulls.get({
       owner: github.context.repo.owner,
