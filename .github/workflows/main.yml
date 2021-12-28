@@ -30,7 +30,7 @@ jobs:
           node-version: '16'
           cache: 'npm'
 
-      - run: npm install
+      - run: npm ci
 
       - name: Run prettier command (for test)
         uses: ./ # Uses an action in the root directory
