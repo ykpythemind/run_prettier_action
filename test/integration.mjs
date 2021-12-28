@@ -126,6 +126,10 @@ const branchName = generateRandomString(32);
           });
           console.log("[cleanup] closed pull request");
         });
+        withErrorHandling(async () => {
+          execSync(`git push origin --delete ${branchName}`);
+          console.log("[cleanup] delete remote temporary branch");
+        });
       }
     }
   });
