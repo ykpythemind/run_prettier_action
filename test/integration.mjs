@@ -1,19 +1,11 @@
 import { Octokit } from "@octokit/rest";
-import { mkdtemp } from "fs";
-import path from "path";
-import os from "os";
 import { execSync } from "child_process";
 
 import { randomBytes } from "crypto";
-
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567".split("");
+import { v4 as uuidv4 } from "uuid";
 
 async function sleep(s) {
   return new Promise((r) => setTimeout(r, s * 1000));
-}
-
-function generateRandomString(length) {
-  return randomBytes(length).reduce((p, i) => p + chars[i % 32], "");
 }
 
 function withErrorHandling(func) {
@@ -38,7 +30,7 @@ if (!dir) {
   throw Error("specify DIR");
 }
 
-const branchName = generateRandomString(32);
+const branchName = uuidv4();
 
 (async () => {
   process.chdir(dir);
@@ -47,9 +39,9 @@ const branchName = generateRandomString(32);
   execSync(`git config --global user.name "ykpythemind"`);
 
   // localでデバッグするとき...
-  // const stdout = execSync(
-  //   "git clone https://github.com/ykpythemind/run_prettier_action ."
-  // );
+  if (process.env.DO_CLONE) {
+    execSync("git clone https://github.com/ykpythemind/run_prettier_action .");
+  }
 
   execSync(`git checkout -b ${branchName} origin/${remoteBranchName}`);
 
@@ -72,9 +64,9 @@ const branchName = generateRandomString(32);
       head: branchName,
       base: "main",
       title: `[test] ${branchName}`,
+      body: `integration test for branch ${remoteBranchName}...`,
     });
 
-    console.log(resp);
     pr = resp.data.number;
 
     const commits = await octokit.pulls.listCommits({
@@ -82,10 +74,9 @@ const branchName = generateRandomString(32);
       repo,
       pull_number: pr,
     });
-    console.log(commits);
-    const commitsnum = commits.data.length;
+    const commitCount = commits.data.length;
 
-    const comment = await octokit.issues.createComment({
+    await octokit.issues.createComment({
       owner,
       repo,
       issue_number: pr,
@@ -95,28 +86,33 @@ const branchName = generateRandomString(32);
     console.log("sleep...");
     await sleep(30);
 
-    for (let item of Array(30)) {
+    let success = false;
+
+    // polling...
+    for (let _ of Array(30)) {
+      console.log(".");
       const commits = await octokit.pulls.listCommits({
         owner,
         repo,
         pull_number: pr,
       });
-      const newCommitNum = commits.data.length;
+      const newCommitCount = commits.data.length;
 
-      console.log(`c ${commitsnum}: c2: ${newCommitNum}`);
-      if (commitsnum < newCommitNum) {
-        console.log(commits.data);
-        console.log("found!!!!!!!");
-
+      if (commitCount < newCommitCount) {
         const lastCommit = commits.data.at(-1);
         if (lastCommit.commit.message === "Apply prettier changes") {
-          console.log("found the commit!", lastCommit.commit);
+          console.log("found new commit!", lastCommit.commit);
+          success = true;
         } else {
           throw Error("commit is not expected", lastCommit);
         }
         break;
       }
       await sleep(2);
+    }
+
+    if (!success) {
+      throw Error("cannot found prettier apply commit");
     }
   } catch (e) {
     console.error(e);
@@ -133,10 +129,10 @@ const branchName = generateRandomString(32);
         });
         console.log("[cleanup] closed pull request");
       });
-      withErrorHandling(async () => {
-        execSync(`git push origin --delete ${branchName}`);
-        console.log("[cleanup] delete remote temporary branch");
-      });
     }
+    withErrorHandling(async () => {
+      execSync(`git push origin --delete ${branchName}`);
+      console.log("[cleanup] delete remote temporary branch");
+    });
   }
 })();
