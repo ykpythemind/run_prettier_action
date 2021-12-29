@@ -63,7 +63,8 @@ const branchName = uuidv4();
       repo,
       head: branchName,
       base: "main",
-      title: `[Integration test] ${branchName}`,
+      title: `[test] ${branchName}`,
+      body: `integration test for branch ${remoteBranchName}...`,
     });
 
     pr = resp.data.number;
