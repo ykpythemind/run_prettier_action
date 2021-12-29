@@ -26,7 +26,7 @@ jobs:
       - run: npm ci
 
       - name: run prettier command
-        uses: ykpythemind/run_prettier_action@main
+        uses: ykpythemind/run_prettier_action@v1
         with:
           prettier_command: ./node_modules/.bin/prettier --write
           GITHUB_TOKEN: ${{ secrets.PRIVATE_ACCESS_TOKEN }}
