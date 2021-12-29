@@ -1,7 +1,6 @@
 import { Octokit } from "@octokit/rest";
 import { execSync } from "child_process";
 
-import { randomBytes } from "crypto";
 import { v4 as uuidv4 } from "uuid";
 
 async function sleep(s) {
