@@ -7,7 +7,6 @@ const { spawnSync } = require("child_process");
 
 (async () => {
   try {
-    console.log("hey! from branch t2");
     const prettierCommand = core.getInput("prettier_command");
 
     const pullRequestNumber = github.context.payload.issue.number;
@@ -21,16 +20,24 @@ const { spawnSync } = require("child_process");
       return;
     }
 
-    // TODO: reaction here
-
     const octokit = new Octokit();
+
+    const owner = github.context.repo.owner;
+    const repo = github.context.repo.repo;
+
+    octokit.reactions.createForIssueComment({
+      owner,
+      repo,
+      comment_id: github.context.payload.comment.id,
+      content: "+1",
+    });
+
     const { data } = await octokit.pulls.get({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
+      owner,
+      repo,
       pull_number: pullRequestNumber,
     });
 
-    // const baseBranch = data.base.ref
     const branch = data.head.ref;
 
     await exec.exec(`git fetch origin ${branch} --depth 1`);
@@ -38,8 +45,8 @@ const { spawnSync } = require("child_process");
 
     // todo: paginate
     const { data: fileList } = await octokit.pulls.listFiles({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
+      owner,
+      repo,
       pull_number: pullRequestNumber,
     });
 
@@ -64,7 +71,7 @@ const { spawnSync } = require("child_process");
     // }
 
     if (error) {
-      console.log(error);
+      console.error(error);
     }
 
     const cmdOutput = stdout.toString();
@@ -74,8 +81,8 @@ const { spawnSync } = require("child_process");
     const body = `prettier executed. (exit with status ${status})\n\n${cmdOutput}`;
 
     await octokit.pulls.createReview({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
+      owner,
+      repo,
       pull_number: pullRequestNumber,
       body: body,
       event: "COMMENT",
@@ -88,8 +95,8 @@ const { spawnSync } = require("child_process");
     if (error) {
       const body = `error: ${error}`;
       await octokit.pulls.createReview({
-        owner: github.context.repo.owner,
-        repo: github.context.repo.repo,
+        owner,
+        repo,
         pull_number: pullRequestNumber,
         body: body,
         event: "COMMENT",
