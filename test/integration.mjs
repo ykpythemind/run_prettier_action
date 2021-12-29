@@ -91,6 +91,7 @@ const branchName = uuidv4();
 
     // polling...
     for (let _ of Array(30)) {
+      console.log(".");
       const commits = await octokit.pulls.listCommits({
         owner,
         repo,
