@@ -66,7 +66,6 @@ const branchName = uuidv4();
       title: `[Integration test] ${branchName}`,
     });
 
-    console.log(resp);
     pr = resp.data.number;
 
     const commits = await octokit.pulls.listCommits({
@@ -74,10 +73,9 @@ const branchName = uuidv4();
       repo,
       pull_number: pr,
     });
-    console.log(commits);
-    const commitsnum = commits.data.length;
+    const commitCount = commits.data.length;
 
-    const comment = await octokit.issues.createComment({
+    await octokit.issues.createComment({
       owner,
       repo,
       issue_number: pr,
@@ -97,9 +95,9 @@ const branchName = uuidv4();
         repo,
         pull_number: pr,
       });
-      const newCommitNum = commits.data.length;
+      const newCommitCount = commits.data.length;
 
-      if (commitsnum < newCommitNum) {
+      if (commitCount < newCommitCount) {
         const lastCommit = commits.data.at(-1);
         if (lastCommit.commit.message === "Apply prettier changes") {
           console.log("found new commit!", lastCommit.commit);
