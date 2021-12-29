@@ -1,1 +1,1 @@
-const a    = "fuga"
+const a = "fuga";
