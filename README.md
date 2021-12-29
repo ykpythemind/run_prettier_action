@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
-          cache: 'npm'
+          cache: "npm"
 
       - run: npm ci
 
@@ -39,11 +39,10 @@ jobs:
 
 <img width="1061" alt="image" src="https://user-images.githubusercontent.com/22209702/115342382-25e0bc00-a1e5-11eb-8683-e8b5662a8c41.png">
 
-
 ### About (Japanese)
 
-インストールすると、PRコメントで `/prettier` を入力することで自動でprettierをかけ、commitを積んでくれるactionが起動します。
-pre commit hookが苦手な方、任意のタイミングでprettierかけたい方にオススメです
+インストールすると、PR コメントで `/prettier` を入力することで自動で prettier をかけ、commit を積んでくれる action が起動します。
+pre commit hook が苦手な方、任意のタイミングで prettier かけたい方にオススメです
 
 ## option
 
@@ -56,7 +55,6 @@ Your repository must contain `prettier` package on package.json
 ```
 npm run ncc
 ```
-
 
 ## test
 
