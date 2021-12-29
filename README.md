@@ -8,9 +8,9 @@ on:
     types: [created]
 
 jobs:
-  prettier_job:
+  prettier:
     runs-on: ubuntu-latest
-    name: prettier job
+    name: Run Prettier
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,6 +21,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
+          cache: 'npm'
 
       - run: npm ci
 
